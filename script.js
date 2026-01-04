@@ -33,16 +33,16 @@ const MESSAGES = {
         "🎊 Saving up all the confetti for next year!"
     ],
     today: [
-        "🎉 Happy Birthday! Today is YOUR day!",
-        "🥳 Wishing you a day filled with love and laughter!",
-        "⭐ It's your special day! Make a wish!",
-        "🌈 Another trip around the sun! You're glowing!",
-        "✨ Happy Birthday! May all your dreams come true!",
-        "💝 To the world you may be one person, but to me you are the world!",
-        "🎈 Cheers to you! Have an amazing celebration!",
-        "🍰 Eat cake, be merry, and celebrate YOU!",
-        "🎁 Happy Birthday! You deserve the best day ever!",
-        "💖 Sending you huge hugs on your big day!"
+        // Use the special birthday poem for the celebration
+        `🎂 <strong>Happy Birthday, Shining Star!</strong> 🎂<br><br>
+        Today the world celebrates YOU,<br>
+        A soul so kind, so brave, so true.<br>
+        May laughter fill your every hour,<br>
+        And joy rain down in a gentle shower.<br><br>
+        The candles glow, the wishes soar,<br>
+        May life give you and so much more.<br>
+        Another year of dreams come true,<br>
+        This special day is all for you! 🌟`
     ],
     future: [
         "🌟 Something wonderful is about to happen.",
@@ -647,8 +647,15 @@ function showMessage(category) {
     const wishesEl = messageSection.querySelector('.wishes');
     const message = getRandomMessage(category);
 
-    // Type out message
-    typeText(wishesEl, message, 30);
+    // For poems with HTML formatting, use innerHTML directly
+    if (message.includes('<br>')) {
+        wishesEl.innerHTML = message;
+        wishesEl.style.opacity = '0';
+        gsap.to(wishesEl, { opacity: 1, duration: 1.5, ease: "power2.inOut" });
+    } else {
+        // Type out simple messages
+        typeText(wishesEl, message, 30);
+    }
 
     gsap.from(messageSection, {
         y: 50,
