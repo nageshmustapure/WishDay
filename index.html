@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wisher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app-container">
+
+        <!-- 3D Canvas -->
+        <canvas id="three-canvas"></canvas>
+
+        <!-- Mouse Trail Canvas -->
+        <canvas id="sparkle-canvas"></canvas>
+
+        <!-- Aurora Background -->
+        <div class="aurora-container">
+            <div class="aurora aurora-1"></div>
+            <div class="aurora aurora-2"></div>
+            <div class="aurora aurora-3"></div>
+        </div>
+
+        <!-- Noise Overlay -->
+        <div class="noise-overlay"></div>
+
+        <!-- Creator Mode UI -->
+        <div id="creator-ui" class="mode-container hidden">
+            <div class="glass-card creator-card">
+                <div class="card-glow"></div>
+                <h1>✨ Create Birthday Magic</h1>
+                <p class="subtitle">Generate a personalized celebration experience</p>
+
+                <form id="create-form">
+                    <div class="input-group">
+                        <label for="name">Recipient's Name</label>
+                        <input type="text" id="name" placeholder="Enter their name..." required autocomplete="off">
+                        <span class="input-glow"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="date">Birthday Date</label>
+                        <input type="date" id="date" required>
+                        <span class="input-glow"></span>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-magic">
+                        <span class="btn-text">🎁 Generate Magic Link</span>
+                        <div class="btn-particles"></div>
+                    </button>
+                </form>
+
+                <div id="result-area" class="hidden">
+                    <p class="link-label">Your magic link is ready! Select and copy:</p>
+                    <div class="link-box">
+                        <input type="text" id="share-link" readonly onclick="this.select()">
+                    </div>
+                    <div class="action-buttons">
+                        <button id="test-btn" class="btn-secondary" title="Test in New Tab">
+                            🚀 Test Link
+                        </button>
+                    </div>
+                    <p class="help-text">Click the link box, then press Ctrl+C to copy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Viewer Mode UI -->
+        <div id="viewer-ui" class="mode-container hidden">
+
+            <!-- Countdown Mode (Before Birthday) -->
+            <div id="countdown-mode" class="hidden">
+                <div class="countdown-content">
+                    <h1 class="countdown-greeting">Hey <span id="countdown-name"></span>! 👋</h1>
+
+                    <!-- Daily Activity Area -->
+                    <div id="daily-activity"></div>
+
+                    <!-- Countdown Timer -->
+                    <div class="countdown-timer">
+                        <div class="time-unit">
+                            <span id="timer-days">00</span>
+                            <label>Days</label>
+                        </div>
+                        <div class="time-unit">
+                            <span id="timer-hours">00</span>
+                            <label>Hours</label>
+                        </div>
+                        <div class="time-unit">
+                            <span id="timer-minutes">00</span>
+                            <label>Minutes</label>
+                        </div>
+                        <div class="time-unit">
+                            <span id="timer-seconds">00</span>
+                            <label>Seconds</label>
+                        </div>
+                    </div>
+
+                    <p class="countdown-hint">✨ Come back tomorrow for a new surprise! ✨</p>
+                </div>
+            </div>
+
+            <!-- Phase 1: Starfield Warp Intro -->
+            <div id="starfield-intro" class="hidden">
+                <div class="warp-text">
+                    <span class="reveal-text">A special moment awaits...</span>
+                </div>
+            </div>
+
+            <!-- Phase 2: Balloon Pop Game -->
+            <div id="balloon-game" class="hidden">
+                <div class="game-instruction">
+                    <span class="instruction-icon">🎈</span>
+                    <span class="instruction-text">Pop the balloons to reveal your surprise!</span>
+                </div>
+                <div id="balloon-container"></div>
+                <div id="revealed-letters"></div>
+            </div>
+
+            <!-- Phase 3: The Grand Reveal -->
+            <div id="content-reveal" class="hidden">
+                <div class="celebration-content">
+
+                    <!-- Birthday Header with Holographic Effect -->
+                    <div id="birthday-header" class="holographic-container">
+                        <h2 class="holographic-text">Happy Birthday</h2>
+                        <div class="holographic-particles"></div>
+                    </div>
+
+                    <!-- Recipient Name with Rainbow Shimmer -->
+                    <h1 id="recipient-name" class="grand-title rainbow-text">Name</h1>
+
+                    <!-- Interactive Candle Section (Birthday Only) -->
+                    <div id="candle-section" class="hidden">
+                        <p class="candle-instruction">🕯️ Click each candle to blow it out!</p>
+                        <div id="candle-container"></div>
+                        <div id="wish-prompt" class="hidden">
+                            <button id="make-wish-btn" class="btn-magic">
+                                ✨ Make a Wish! ✨
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Countdown Section (Non-Birthday) -->
+                    <div id="countdown-container" class="hidden">
+                        <p class="timer-label">✨ The magic begins in...</p>
+                        <div class="timer">
+                            <div class="time-unit">
+                                <div class="time-card">
+                                    <span id="days">00</span>
+                                </div>
+                                <small>Days</small>
+                            </div>
+                            <div class="time-separator">:</div>
+                            <div class="time-unit">
+                                <div class="time-card">
+                                    <span id="hours">00</span>
+                                </div>
+                                <small>Hours</small>
+                            </div>
+                            <div class="time-separator">:</div>
+                            <div class="time-unit">
+                                <div class="time-card">
+                                    <span id="minutes">00</span>
+                                </div>
+                                <small>Mins</small>
+                            </div>
+                            <div class="time-separator">:</div>
+                            <div class="time-unit">
+                                <div class="time-card">
+                                    <span id="seconds">00</span>
+                                </div>
+                                <small>Secs</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gift Box Section -->
+                    <div id="gift-section" class="hidden">
+                        <div id="gift-box" class="interactive-gift">
+                            <div class="gift-lid">
+                                <div class="gift-bow"></div>
+                            </div>
+                            <div class="gift-body">
+                                <div class="gift-ribbon-v"></div>
+                                <div class="gift-ribbon-h"></div>
+                            </div>
+                        </div>
+                        <p class="gift-instruction">🎁 Click the gift to open!</p>
+                    </div>
+
+                    <!-- Message Section -->
+                    <div id="birthday-message" class="hidden">
+                        <div class="message-card">
+                            <p class="wishes"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fireworks Canvas -->
+        <canvas id="fireworks-canvas"></canvas>
+
+    </div>
+
+    <script src="audio.js"></script>
+    <script src="effects.js"></script>
+    <script src="scene3d.js"></script>
+    <script src="activities.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
