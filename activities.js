@@ -372,24 +372,122 @@ const DAILY_ACTIVITIES = {
     }
 };
 
-// Daily messages pool
-const COUNTDOWN_MESSAGES = [
-    "Something magical is being prepared just for you! ✨",
-    "A celebration is brewing... patience! 🎉",
-    "The countdown to your special day has begun! 🌟",
-    "Good things come to those who wait! 💫",
-    "Someone is planning something wonderful for you! 🎁",
-    "Your special day is getting closer! 🎂",
-    "The excitement is building! Can you feel it? ⭐",
-    "Not long now until something amazing happens! 🎈",
-    "A surprise is waiting just around the corner! 🌈",
-    "The magic is almost ready! ✨",
-    "Sweet moments are coming your way! 🍰",
-    "Someone special is thinking of you! 💝",
-    "Wonderful things are worth waiting for! 🎊",
-    "Your celebration countdown continues! 🕐",
-    "The best is yet to come! 🚀"
+// Daily poems pool - each day reveals a unique verse
+const COUNTDOWN_POEMS = [
+    // Day 0 (mod 15) - Stars theme
+    `Stars are aligning in the sky,<br>
+    A special moment drawing nigh.<br>
+    Hold your heart and make a wish,<br>
+    Your day will be simply lavish! ✨`,
+
+    // Day 1 - Sunrise theme
+    `Each sunrise brings you closer still,<br>
+    To a day of joy and thrill.<br>
+    The universe has plans so bright,<br>
+    For you, dear soul, its pure delight! 🌅`,
+
+    // Day 2 - Magic theme
+    `Magic brews in every hour,<br>
+    Like a blossoming flower.<br>
+    Something wonderful awaits,<br>
+    Written in your destined fates! 🌸`,
+
+    // Day 3 - Treasure theme
+    `Like a treasure yet to find,<br>
+    Your celebration, one of a kind.<br>
+    Patience, dear one, hold on tight,<br>
+    Your moment comes with pure delight! 💎`,
+
+    // Day 4 - Moon theme
+    `The moon counts down each night for you,<br>
+    Whispering wishes, tried and true.<br>
+    Soon the stars will dance and sing,<br>
+    For the joy your day will bring! 🌙`,
+
+    // Day 5 - Rainbow theme
+    `Like rainbows after gentle rain,<br>
+    Your happiness will bloom again.<br>
+    Someone special loves you so,<br>
+    And wants the whole wide world to know! 🌈`,
+
+    // Day 6 - Garden theme
+    `In the garden of life you grow,<br>
+    With beauty only you can show.<br>
+    A celebration blooms ahead,<br>
+    With love and joy to be widespread! 🌻`,
+
+    // Day 7 - Ocean theme
+    `Like waves that kiss the sandy shore,<br>
+    Your special day we so adore.<br>
+    The ocean whispers just for you,<br>
+    A celebration grand and true! 🌊`,
+
+    // Day 8 - Butterfly theme
+    `Like a butterfly you'll spread your wings,<br>
+    And dance to what the future brings.<br>
+    Your metamorphosis is near,<br>
+    A brand new wonderful year! 🦋`,
+
+    // Day 9 - Candle theme
+    `A candle flickers, soft and bright,<br>
+    Preparing for your special night.<br>
+    Make a wish upon the flame,<br>
+    Your life will never be the same! 🕯️`,
+
+    // Day 10 - Music theme
+    `The symphony of life plays on,<br>
+    A melody of dusk and dawn.<br>
+    Soon it crescendos just for you,<br>
+    A birthday celebration true! 🎵`,
+
+    // Day 11 - Dream theme
+    `In dreams we often find our way,<br>
+    To brighter hopes and better days.<br>
+    Keep dreaming, dear, your time is near,<br>
+    The best day of your whole year! 💭`,
+
+    // Day 12 - Heart theme
+    `A heart that beats with love so true,<br>
+    Is sending warmest thoughts to you.<br>
+    They're counting moments, just like me,<br>
+    For your day of jubilee! 💝`,
+
+    // Day 13 - Adventure theme
+    `An adventure waits around the bend,<br>
+    A celebration without end.<br>
+    Pack your heart with joy and cheer,<br>
+    Your magical day is almost here! 🗺️`,
+
+    // Day 14 - Firework theme
+    `Like fireworks that light the sky,<br>
+    Your spirit soars, forever high.<br>
+    Soon the world will celebrate,<br>
+    The soul that makes this life so great! 🎆`
 ];
+
+// Special birthday poem - shown on the actual day
+const BIRTHDAY_POEM = `
+    🎂 Happy Birthday, Shining Star! 🎂
+    
+    Today the world celebrates YOU,<br>
+    A soul so kind, so brave, so true.<br>
+    May laughter fill your every hour,<br>
+    And joy rain down in a gentle shower.<br><br>
+    
+    The candles glow, the wishes soar,<br>
+    May life give you and so much more.<br>
+    Another year of dreams come true,<br>
+    This special day is all for you! 🌟
+`;
+
+// Get poem for a specific day
+function getDailyPoem(daysRemaining) {
+    const index = daysRemaining % COUNTDOWN_POEMS.length;
+    return COUNTDOWN_POEMS[index];
+}
+
+// Export birthday poem for use elsewhere
+window.BIRTHDAY_POEM = BIRTHDAY_POEM;
 
 // Get activity for a specific day
 function getDailyActivity(daysRemaining) {
@@ -401,8 +499,8 @@ function getDailyActivity(daysRemaining) {
 
 // Get message for a specific day
 function getDailyMessage(daysRemaining) {
-    const index = daysRemaining % COUNTDOWN_MESSAGES.length;
-    return COUNTDOWN_MESSAGES[index];
+    const index = daysRemaining % COUNTDOWN_POEMS.length;
+    return COUNTDOWN_POEMS[index];
 }
 
 // Initialize countdown mode
