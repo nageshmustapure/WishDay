@@ -1273,18 +1273,22 @@ input:focus+.input-glow {
 /* Daily Activity Container */
 #daily-activity {
     margin: 30px 0;
-    min-height: 250px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 450px;
 }
 
 .activity-intro {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     animation: pulse 2s ease-in-out infinite;
+    text-align: center;
+    padding: 0 10px;
 }
 
 /* Countdown Timer */
@@ -1379,27 +1383,33 @@ input:focus+.input-glow {
 
 .fortune-paper {
     position: absolute;
-    top: 50%;
+    top: 120%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #fffef0, #fff8dc);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    padding: 25px 30px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     animation: paper-unfold 0.5s ease-out;
-    min-width: 250px;
+    width: max-content;
+    max-width: 90vw;
+    min-width: 280px;
+    z-index: 10;
 }
 
 .fortune-message {
-    color: #333;
+    color: var(--text-primary);
     font-size: 1rem;
+    line-height: 1.8;
     font-style: italic;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 .fortune-days {
-    color: var(--accent-primary);
+    color: var(--accent-gold);
     font-weight: 600;
+    text-align: center;
 }
 
 @keyframes paper-unfold {
@@ -1424,11 +1434,12 @@ input:focus+.input-glow {
 
 .scratch-card {
     position: relative;
-    width: 320px;
-    height: 180px;
+    width: min(320px, 90vw);
+    height: auto;
+    min-height: 180px;
     margin: 0 auto;
     border-radius: 16px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -1437,32 +1448,32 @@ input:focus+.input-glow {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 180px;
     cursor: crosshair;
     transition: opacity 0.5s ease;
     border-radius: 16px;
 }
 
 .scratch-message {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 180px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 25px 20px;
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     border-radius: 16px;
 }
 
 .revealed-message {
     color: var(--accent-gold);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 1.8;
+    text-align: center;
 }
 
 .days-text {
@@ -1561,19 +1572,27 @@ input:focus+.input-glow {
 }
 
 .fortune-result {
-    margin-top: 20px;
+    margin-top: 25px;
     animation: fadeIn 0.5s ease;
+    padding: 20px;
+    background: var(--glass-bg);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    max-width: 90vw;
 }
 
 .result-message {
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: var(--accent-gold);
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 1.8;
+    text-align: center;
 }
 
 .result-days {
     color: var(--text-secondary);
+    text-align: center;
 }
 
 /* ==================== */
@@ -1650,17 +1669,25 @@ input:focus+.input-glow {
 .bubble-message {
     margin-top: 30px;
     animation: fadeIn 0.5s ease;
+    padding: 20px;
+    background: var(--glass-bg);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    max-width: 90vw;
 }
 
 .message-text {
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: var(--accent-gold);
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 1.8;
+    text-align: center;
 }
 
 .days-remaining {
     color: var(--text-secondary);
+    text-align: center;
 }
 
 /* ==================== */
@@ -1735,8 +1762,13 @@ input:focus+.input-glow {
 }
 
 .star-message {
-    margin-top: 20px;
+    margin-top: 25px;
     animation: fadeIn 0.5s ease;
+    padding: 20px;
+    background: var(--glass-bg);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    max-width: 90vw;
 }
 
 /* ==================== */
@@ -1798,8 +1830,13 @@ input:focus+.input-glow {
 }
 
 .gift-message {
-    margin-top: 20px;
+    margin-top: 25px;
     animation: fadeIn 0.5s ease;
+    padding: 20px;
+    background: var(--glass-bg);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    max-width: 90vw;
 }
 
 /* ==================== */
@@ -1870,8 +1907,13 @@ input:focus+.input-glow {
 }
 
 .wish-message {
-    margin-top: 20px;
+    margin-top: 25px;
     animation: fadeIn 0.5s ease;
+    padding: 20px;
+    background: var(--glass-bg);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    max-width: 90vw;
 }
 
 /* ==================== */
